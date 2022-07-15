@@ -1,0 +1,112 @@
+package stackAndQueues;
+
+import java.util.Scanner;
+
+public class StackUsingArrays {
+	
+	private static int data[];
+	private static int top; // it is the index of topmost element of stack
+
+	public StackUsingArrays() {
+		// TODO Auto-generated constructor stub
+		data = new int[10];
+		top=-1;
+	}
+	
+	public StackUsingArrays(int capacity) {
+		// TODO Auto-generated constructor stu
+		data  =new int[capacity];
+		top=-1;
+	}
+	
+	public static boolean isEmpty()
+	{
+		if(top==-1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public static int size()
+	{
+		return top+1;
+	}
+	
+	public static int top() throws stackEmptyException
+	{
+		if(size()==0)
+		{
+//			stack empty exception
+			stackEmptyException e = new stackEmptyException();
+			throw e;
+		}
+		return data[top];
+	}
+	
+	public static void push(int element) throws stackFullException
+	{
+		if(size()==data.length)
+		{
+//			stackFullException e = new stackFullException();
+//			throw e;
+			doubleCapacity();
+		}
+		top++;
+		data[top]=element;
+	}
+	
+	private static void doubleCapacity()
+	{
+		int temp[]=data;
+		data = new int[2*temp.length];
+		for(int i=0;i<=top;i++)
+		{
+			data[i]=temp[i];
+		}
+	}
+	
+	public static int pop() throws stackEmptyException
+	{
+		if(size()==0)
+		{
+			stackEmptyException e = new stackEmptyException();
+			throw e;
+		}
+		int temp = data[top];
+		top--;		
+		return temp;
+	}
+	
+	public static void main(String[] args)throws stackFullException,stackEmptyException {
+		// TODO Auto-generated method stub
+
+		StackUsingArrays stack = new StackUsingArrays(3);
+		
+		System.out.println("Enter the elements in the stack : ");
+		
+		for(int i=0;i<5;i++)
+		{
+			Scanner s = new Scanner(System.in);
+			int n=s.nextInt();
+			push(n);
+		}
+		
+		System.out.println("printing the elements of the stack : ");
+		while(!isEmpty())
+		{
+			try
+			{
+				System.out.println(stack.pop());
+			}
+			catch (stackEmptyException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+}
